@@ -1,5 +1,5 @@
 resource "aws_iam_role" "eb_business_card_role" {
-  name = "${var.app}_iam"
+  name = "${var.app_name}_iam"
 
   assume_role_policy = <<EOF
 {

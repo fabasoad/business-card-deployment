@@ -12,7 +12,7 @@ jobs:
       - name: Get latest release tag
         id: latest_release
         run: |
-          latest_tag=$(curl  "https://api.github.com/repos/fabasoad/business-card/tags" | jq -r '.[0].name')
+          latest_tag=$(curl "https://api.github.com/repos/fabasoad/business-card/tags" | jq -r '.[0].name')
           echo "::set-output name=tag::${latest_tag}"
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -54,23 +54,22 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: business-card-payload
-          path: ./
+          path: ./terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: cd terraform && terraform init
       - name: Terraform Validate
-        run: terraform validate -no-color
+        run: cd terraform && terraform validate -no-color
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color
+        run: cd terraform && terraform plan -no-color
         continue-on-error: true
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
-#      - name: Terraform Apply
-#        if: github.event_name == 'workflow_dispatch'
-#        run: terraform apply -auto-approve
+      - name: Terraform Apply
+        run: cd terraform && terraform apply -auto-approve

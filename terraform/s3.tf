@@ -1,6 +1,6 @@
 locals {
   bucket_name  = "business-card-bucket"
-  payload_path = "${path.module}/${var.app}-payload.zip"
+  payload_path = "${path.module}/${var.app_name}-payload.zip"
 }
 
 resource "aws_s3_bucket_public_access_block" "business_card_bucket_access" {
@@ -16,6 +16,12 @@ resource "aws_s3_bucket" "business_card_bucket" {
   bucket = local.bucket_name
   versioning {
     enabled = true
+  }
+  lifecycle_rule {
+    enabled = true
+    noncurrent_version_expiration {
+      days = 90
+    }
   }
   server_side_encryption_configuration {
     rule {
@@ -37,6 +43,6 @@ resource "aws_s3_bucket" "business_card_bucket" {
 
 resource "aws_s3_bucket_object" "business_card_payload" {
   bucket = aws_s3_bucket.business_card_bucket.id
-  key    = "beanstalk/${var.app}-payload.zip"
+  key    = "beanstalk/${var.app_name}-payload.zip"
   source = local.payload_path
 }
