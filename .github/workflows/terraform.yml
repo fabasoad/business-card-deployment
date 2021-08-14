@@ -9,12 +9,18 @@ jobs:
     name: Build bundle
     runs-on: ubuntu-latest
     steps:
+      - name: Get latest release tag
+        id: latest_release
+        run: |
+          latest_tag=$(curl --silent "https://api.github.com/repos/fabasoad/business-card/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+          echo "::set-output name=tag::${latest_tag}"
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           repository: fabasoad/business-card
-          ref: refs/heads/main
+          ref: refs/tags/${{ steps.latest_release.outputs.tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
       - name: Cache node_modules
         id: yarn-cache
         uses: actions/cache@v2
