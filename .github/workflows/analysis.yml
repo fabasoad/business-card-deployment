@@ -1,0 +1,24 @@
+---
+name: Analysis
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'bugfix/**'
+      - 'dependabot/*'
+      - 'feature/**'
+    paths:
+      - '**.tf'
+jobs:
+  checkov:
+    runs-on: ubuntu-latest
+    name: checkov-action
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bridgecrewio/checkov-action@master
+        with:
+          directory: /
+          framework: terraform
+          output_format: cli
+          download_external_modules: true
