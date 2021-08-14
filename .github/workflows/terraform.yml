@@ -12,7 +12,7 @@ jobs:
       - name: Get latest release tag
         id: latest_release
         run: |
-          latest_tag=$(curl --silent "https://api.github.com/repos/fabasoad/business-card/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+          latest_tag=$(curl  "https://api.github.com/repos/fabasoad/business-card/tags" | jq -r '.[0].name')
           echo "::set-output name=tag::${latest_tag}"
       - name: Checkout repository
         uses: actions/checkout@v2
