@@ -45,4 +45,5 @@ resource "aws_s3_bucket_object" "business_card_payload" {
   bucket = aws_s3_bucket.business_card_bucket.id
   key    = "beanstalk/${var.app_name}-payload.zip"
   source = local.payload_path
+  etag   = filemd5(local.payload_path)
 }

@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get latest release tag
-        id: latest_release
+        id: latest_tag
         run: |
-          latest_tag=$(curl "https://api.github.com/repos/fabasoad/business-card/tags" | jq -r '.[0].name')
-          echo "::set-output name=tag::${latest_tag}"
+          result=$(curl "https://api.github.com/repos/fabasoad/business-card/tags" | jq -r '.[0].name')
+          echo "::set-output name=tag::${result}"
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           repository: fabasoad/business-card
-          ref: refs/tags/${{ steps.latest_release.outputs.tag }}
+          ref: refs/tags/${{ steps.latest_tag.outputs.tag }}
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
       - name: Cache node_modules
