@@ -18,4 +18,4 @@ jobs:
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Terraform Lint
-        run: terraform fmt -check
+        run: cd terraform && terraform fmt -check

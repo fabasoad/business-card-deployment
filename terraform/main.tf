@@ -9,7 +9,7 @@ resource "aws_elastic_beanstalk_application" "default" {
 }
 
 resource "aws_elastic_beanstalk_application_version" "default" {
-  name        = "${var.app_name}-${var.app_version}"
+  name        = "${var.app_name}-${filesha256(local.payload_path)}"
   application = aws_elastic_beanstalk_application.default.name
   description = "Application version created by terraform"
   bucket      = aws_s3_bucket.business_card_bucket.id
@@ -21,6 +21,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
   application         = aws_elastic_beanstalk_application.default.name
   solution_stack_name = var.solution_stack_name
   tier                = var.tier
+  version_label       = aws_elastic_beanstalk_application_version.default.name
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"

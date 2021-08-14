@@ -13,10 +13,6 @@ variable "environment" {
   description = "Environment (prod/stg/dev)"
   type        = string
 }
-variable "app_version" {
-  description = "Application version"
-  type        = string
-}
 variable "solution_stack_name" {
   default     = "64bit Amazon Linux 2 v5.4.4 running Node.js 14"
   description = "Stack that is used to host website"

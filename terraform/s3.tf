@@ -17,6 +17,12 @@ resource "aws_s3_bucket" "business_card_bucket" {
   versioning {
     enabled = true
   }
+  lifecycle_rule {
+    enabled = true
+    noncurrent_version_expiration {
+      days = 90
+    }
+  }
   server_side_encryption_configuration {
     rule {
       apply_server_side_encryption_by_default {

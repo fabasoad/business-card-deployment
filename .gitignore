@@ -9,3 +9,6 @@ business-card-payload.zip
 .terraform
 .terraform.lock.hcl
 *.auto.tfvars
+
+# Environment variables
+.envrc
