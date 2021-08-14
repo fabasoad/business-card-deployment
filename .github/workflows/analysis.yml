@@ -3,11 +3,6 @@ name: Analysis
 
 on:
   push:
-    branches:
-      - 'main'
-      - 'bugfix/**'
-      - 'dependabot/*'
-      - 'feature/**'
     paths:
       - '**.tf'
 jobs:
