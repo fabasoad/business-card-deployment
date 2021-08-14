@@ -6,6 +6,17 @@ Deployment repo for https://github.com/fabasoad/business-card project
 
 ## Work locally
 
+### Install hooks
+
+- Install the pre-commit from https://pre-commit.com/
+- Install the pre-commit configuration
+
+```shell
+pre-commit install
+```
+
+### Deploy
+
 > Be sure that `business-card-development` repository is on the same level as `business-card` repository.
 
 Run the following commands:

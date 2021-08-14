@@ -11,4 +11,5 @@ terraform {
       name = "business-card"
     }
   }
+  required_version = "~> 1.0.4"
 }

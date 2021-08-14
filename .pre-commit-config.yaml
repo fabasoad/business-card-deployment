@@ -1,0 +1,25 @@
+repos:
+- repo: local
+  hooks:
+    - id: pre-commit-autoupdate
+      name: pre-commit-autoupdate
+      entry: pre-commit autoupdate
+      language: system
+      pass_filenames: false
+      verbose: true
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.0.1
+  hooks:
+  - id: check-yaml
+  - id: check-merge-conflict
+  - id: detect-aws-credentials
+  - id: detect-private-key
+  - id: end-of-file-fixer
+  - id: mixed-line-ending
+    args: ["--fix=lf"]
+  - id: trailing-whitespace
+- repo: https://github.com/bridgecrewio/checkov.git
+  rev: '2.0.348'
+  hooks:
+    - id: checkov
+      args: ["--quiet","--framework","terraform"]
