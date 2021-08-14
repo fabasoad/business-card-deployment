@@ -6,16 +6,10 @@ on:
   push:
     tags:
       - 'v*'
-    branches:
-      - 'main'
-      - 'bugfix/**'
-      - 'dependabot/*'
-      - 'feature/**'
 
 jobs:
   download_bundle:
     name: Build bundle
-    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -64,11 +58,10 @@ jobs:
         run: terraform validate -no-color
       - name: Terraform Plan
         id: plan
-        if: github.event_name == 'workflow_dispatch'
         run: terraform plan -no-color
         continue-on-error: true
       - name: Terraform Plan Status
-        if: github.event_name == 'workflow_dispatch' && steps.plan.outcome == 'failure'
+        if: steps.plan.outcome == 'failure'
         run: exit 1
 #      - name: Terraform Apply
 #        if: github.event_name == 'workflow_dispatch'
