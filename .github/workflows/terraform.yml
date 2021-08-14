@@ -12,7 +12,7 @@ jobs:
       - name: Get latest release tag
         id: latest_release
         run: |
-          latest_tag=$(curl  "https://api.github.com/repos/fabasoad/business-card/tags" | jq -r '.[0].name')
+          latest_tag=$(curl "https://api.github.com/repos/fabasoad/business-card/tags" | jq -r '.[0].name')
           echo "::set-output name=tag::${latest_tag}"
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -48,11 +48,6 @@ jobs:
     needs: build_bundle
     runs-on: ubuntu-latest
     steps:
-      - name: Get latest release tag
-        id: latest_release
-        run: |
-          latest_tag=$(curl "https://api.github.com/repos/fabasoad/business-card/tags" | jq -r '.[0].name')
-          echo "::set-output name=tag::${latest_tag}"
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Download bundle
@@ -76,6 +71,5 @@ jobs:
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
-#      - name: Terraform Apply
-#        if: github.event_name == 'workflow_dispatch'
-#        run: cd terraform && terraform apply -auto-approve
+      - name: Terraform Apply
+        run: cd terraform && terraform apply -auto-approve
