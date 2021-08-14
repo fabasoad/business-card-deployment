@@ -25,16 +25,16 @@ jobs:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Terraform Init
         id: init
-        run: cd terraform && terraform init
+        run: terraform init
       - name: Terraform Validate
-        run: cd terraform && terraform validate -no-color
+        run: terraform validate -no-color
       - name: Terraform Plan
         id: plan
-        run: cd terraform && terraform plan -no-color
+        run: terraform plan -no-color
         continue-on-error: true
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
       - name: Terraform Apply
         if: github.event_name == 'workflow_dispatch'
-        run: cd terraform && terraform apply -auto-approve
+        run: terraform apply -auto-approve
