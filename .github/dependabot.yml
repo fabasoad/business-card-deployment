@@ -1,6 +1,14 @@
 ---
 version: 2
 updates:
+  - package-ecosystem: "terraform"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    reviewers:
+      - "fabasoad"
+    labels:
+      - "dependencies"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
