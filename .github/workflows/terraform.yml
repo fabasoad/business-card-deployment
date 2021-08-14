@@ -3,41 +3,68 @@ name: Terraform
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - 'v*'
-    branches:
-      - 'main'
-      - 'bugfix/**'
-      - 'dependabot/*'
-      - 'feature/**'
-      - 'test-*'
 
 jobs:
-  terraform:
-    name: Terraform
+  build_bundle:
+    name: Build bundle
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Prepare bundle
-        run: ./build_bundle.sh
+        with:
+          repository: fabasoad/business-card
+          ref: refs/heads/main
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Cache node_modules
+        id: yarn-cache
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Compile
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+        run: yarn install
+      - name: Build bundle
+        run: yarn run build:prod
+      - name: Archive bundle
+        run: |
+          zip -r business-card-payload.zip public
+          zip -j business-card-payload.zip server/{package.json,app.js}
+      - name: Upload bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: business-card-payload
+          path: business-card-payload.zip
+  terraform:
+    name: Terraform
+    needs: build_bundle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Download bundle
+        uses: actions/download-artifact@v2
+        with:
+          name: business-card-payload
+          path: /
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Terraform Init
         id: init
-        run: cd terraform && terraform init
+        run: terraform init
       - name: Terraform Validate
-        run: cd terraform && terraform validate -no-color
+        run: terraform validate -no-color
       - name: Terraform Plan
         id: plan
-        run: cd terraform && terraform plan -no-color
+        run: terraform plan -no-color
         continue-on-error: true
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
-      - name: Terraform Apply
-        if: github.event_name == 'workflow_dispatch'
-        run: cd terraform && terraform apply -auto-approve
+#      - name: Terraform Apply
+#        if: github.event_name == 'workflow_dispatch'
+#        run: terraform apply -auto-approve
