@@ -13,8 +13,41 @@ on:
       - 'feature/**'
 
 jobs:
+  download_bundle:
+    name: Build bundle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          repository: fabasoad/business-card
+          ref: refs/tags/v2.6.1
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Cache node_modules
+        id: yarn-cache
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Compile
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+        run: yarn install
+      - name: Build bundle
+        run: yarn run build:prod
+      - name: Archive bundle
+        run: |
+          zip -r business-card-payload.zip public
+          zip -j business-card-payload.zip server/{package.json,app.js}
+      - name: Upload bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: business-card-payload
+          path: business-card-payload.zip
   terraform:
     name: Terraform
+    needs: download_bundle
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -30,11 +63,12 @@ jobs:
         run: terraform validate -no-color
       - name: Terraform Plan
         id: plan
+        if: github.event_name == 'workflow_dispatch'
         run: terraform plan -no-color
         continue-on-error: true
       - name: Terraform Plan Status
-        if: steps.plan.outcome == 'failure'
+        if: github.event_name == 'workflow_dispatch' && steps.plan.outcome == 'failure'
         run: exit 1
-      - name: Terraform Apply
-        if: github.event_name == 'workflow_dispatch'
-        run: terraform apply -auto-approve
+#      - name: Terraform Apply
+#        if: github.event_name == 'workflow_dispatch'
+#        run: terraform apply -auto-approve

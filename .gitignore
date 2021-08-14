@@ -1,1 +1,10 @@
+# IDE
 .idea
+.vscode
+
+# Project
+business-card-payload.zip
+
+# Terraform
+.terraform
+.terraform.lock.hcl
