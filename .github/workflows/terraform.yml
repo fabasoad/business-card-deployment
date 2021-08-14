@@ -11,7 +11,6 @@ on:
       - 'bugfix/**'
       - 'dependabot/*'
       - 'feature/**'
-      - 'test-*'
 
 jobs:
   terraform:
@@ -20,8 +19,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Prepare bundle
-        run: ./build_bundle.sh
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
