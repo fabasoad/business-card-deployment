@@ -3,12 +3,9 @@ name: Terraform
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - 'v*'
 
 jobs:
-  download_bundle:
+  build_bundle:
     name: Build bundle
     runs-on: ubuntu-latest
     steps:
@@ -42,11 +39,16 @@ jobs:
           path: business-card-payload.zip
   terraform:
     name: Terraform
-    needs: download_bundle
+    needs: build_bundle
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Download bundle
+        uses: actions/download-artifact@v2
+        with:
+          name: business-card-payload
+          path: /
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
