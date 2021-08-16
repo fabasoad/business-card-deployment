@@ -1,3 +1,9 @@
+data "aws_acm_certificate" "default" {
+  domain      = var.dns_name
+  types       = ["AMAZON_ISSUED"]
+  most_recent = true
+}
+
 resource "aws_elastic_beanstalk_application" "default" {
   name        = "${var.app_name}-app"
   description = "Personal website"
@@ -51,5 +57,25 @@ resource "aws_elastic_beanstalk_environment" "default" {
     namespace = "aws:autoscaling:updatepolicy:rollingupdate"
     name      = "RollingUpdateType"
     value     = "Health"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:environment"
+    name      = "LoadBalancerType"
+    value     = "application"
+  }
+  setting {
+    namespace = "aws:elbv2:listener:443"
+    name      = "ListenerEnabled"
+    value     = true
+  }
+  setting {
+    namespace = "aws:elbv2:listener:443"
+    name      = "Protocol"
+    value     = "HTTPS"
+  }
+  setting {
+    namespace = "aws:elbv2:listener:443"
+    name      = "SSLCertificateArns"
+    value     = data.aws_acm_certificate.default.arn
   }
 }

@@ -8,6 +8,8 @@ business-card-payload.zip
 # Terraform
 .terraform
 .terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
 
 # Environment variables
 .envrc
