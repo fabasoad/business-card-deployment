@@ -1,3 +1,7 @@
+variable "account" {
+  description = "Account ID"
+  type        = number
+}
 variable "app_name" {
   description = "Application name"
   type        = string
@@ -24,5 +28,29 @@ variable "instance_type" {
 }
 variable "dns_name" {
   description = "Website DNS name"
+  type        = string
+}
+variable "bucket_name" {
+  description = "S3 bucket name"
+  type        = string
+}
+variable "AWSElasticBeanstalkEnhancedHealth_arn" {
+  description = "AWSElasticBeanstalkEnhancedHealth ARN"
+  type        = string
+}
+variable "AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy_arn" {
+  description = "AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy ARN"
+  type        = string
+}
+variable "AWSElasticBeanstalkWebTier_arn" {
+  description = "AWSElasticBeanstalkWebTier ARN"
+  type        = string
+}
+variable "AWSElasticBeanstalkMulticontainerDocker_arn" {
+  description = "AWSElasticBeanstalkMulticontainerDocker ARN"
+  type        = string
+}
+variable "AWSElasticBeanstalkWorkerTier_arn" {
+  description = "AWSElasticBeanstalkWorkerTier ARN"
   type        = string
 }

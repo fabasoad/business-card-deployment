@@ -1,24 +1,55 @@
-resource "aws_iam_role" "eb_business_card_role" {
-  name = "${var.app_name}_iam"
+data "aws_iam_policy_document" "eb" {
+  statement {
+    sid     = ""
+    actions = ["sts:AssumeRole"]
+    effect  = "Allow"
 
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "",
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "elasticbeanstalk.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole",
-      "Condition": {
-        "StringEquals": {
-          "sts:ExternalId": "elasticbeanstalk"
-        }
-      }
+    condition {
+      test     = "StringEquals"
+      variable = "sts:ExternalId"
+      values   = ["elasticbeanstalk"]
     }
+
+    principals {
+      type        = "Service"
+      identifiers = ["elasticbeanstalk.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role" "eb" {
+  name               = "${var.app_name}_eb_iam"
+  assume_role_policy = data.aws_iam_policy_document.eb.json
+  managed_policy_arns = [
+    var.AWSElasticBeanstalkEnhancedHealth_arn,
+    var.AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy_arn
   ]
 }
-EOF
+
+data "aws_iam_policy_document" "ec2" {
+  statement {
+    sid     = ""
+    actions = ["sts:AssumeRole"]
+    effect  = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role" "ec2" {
+  name               = "${var.app_name}_ec2_iam"
+  assume_role_policy = data.aws_iam_policy_document.ec2.json
+  managed_policy_arns = [
+    var.AWSElasticBeanstalkWebTier_arn,
+    var.AWSElasticBeanstalkMulticontainerDocker_arn,
+    var.AWSElasticBeanstalkWorkerTier_arn
+  ]
+}
+
+resource "aws_iam_instance_profile" "ec2" {
+  name = "${var.app_name}_ec2_instance_profile"
+  role = aws_iam_role.ec2.name
 }

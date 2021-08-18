@@ -1,6 +1,6 @@
 locals {
-  bucket_name  = "business-card-bucket"
-  payload_path = "${path.module}/${var.app_name}-payload.zip"
+  payload_filename = "${var.app_name}-payload.zip"
+  payload_path     = "${path.module}/${local.payload_filename}"
 }
 
 resource "aws_s3_bucket_public_access_block" "business_card_bucket_access" {
@@ -13,7 +13,7 @@ resource "aws_s3_bucket_public_access_block" "business_card_bucket_access" {
 }
 
 resource "aws_s3_bucket" "business_card_bucket" {
-  bucket = local.bucket_name
+  bucket = var.bucket_name
   versioning {
     enabled = true
   }
@@ -34,7 +34,7 @@ resource "aws_s3_bucket" "business_card_bucket" {
     for_each = []
     content {
       target_bucket = logging.value["target_bucket"]
-      target_prefix = "logs/${local.bucket_name}"
+      target_prefix = "logs/${var.app_name}"
     }
   }
   #checkov:skip=CKV_AWS_144:No need to have cross-region replication
@@ -43,7 +43,7 @@ resource "aws_s3_bucket" "business_card_bucket" {
 
 resource "aws_s3_bucket_object" "business_card_payload" {
   bucket = aws_s3_bucket.business_card_bucket.id
-  key    = "beanstalk/${var.app_name}-payload.zip"
+  key    = "beanstalk/${local.payload_filename}"
   source = local.payload_path
   etag   = filemd5(local.payload_path)
 }
