@@ -8,7 +8,7 @@ resource "aws_elastic_beanstalk_application" "default" {
   name        = "${var.app_name}-app"
   description = "Personal website"
   appversion_lifecycle {
-    service_role          = aws_iam_role.eb_business_card_role.arn
+    service_role          = aws_iam_role.eb.arn
     max_count             = 128
     delete_source_from_s3 = true
   }
@@ -23,7 +23,7 @@ resource "aws_elastic_beanstalk_application_version" "default" {
 }
 
 resource "aws_elastic_beanstalk_environment" "default" {
-  name                = "${var.app_name}-${var.environment}"
+  name                = var.environment
   application         = aws_elastic_beanstalk_application.default.name
   solution_stack_name = var.solution_stack_name
   tier                = var.tier
@@ -41,7 +41,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"
-    value     = "aws-elasticbeanstalk-ec2-role"
+    value     = aws_iam_instance_profile.ec2.arn
   }
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
