@@ -83,9 +83,9 @@ resource "aws_elastic_beanstalk_environment" "default" {
     name      = "ListenerEnabled"
     value     = false
   }
-//  setting {
-//    namespace = "aws:elbv2:loadbalancer"
-//    name      = "SecurityGroups"
-//    value     = aws_security_group.lb_sg.arn
-//  }
+  //  setting {
+  //    namespace = "aws:elbv2:loadbalancer"
+  //    name      = "SecurityGroups"
+  //    value     = aws_security_group.lb_sg.arn
+  //  }
 }
