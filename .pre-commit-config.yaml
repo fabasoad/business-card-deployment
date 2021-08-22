@@ -19,7 +19,7 @@ repos:
     args: ["--fix=lf"]
   - id: trailing-whitespace
 - repo: https://github.com/bridgecrewio/checkov.git
-  rev: '2.0.361'
+  rev: '2.0.363'
   hooks:
     - id: checkov
       args: ["--quiet","--framework","terraform"]

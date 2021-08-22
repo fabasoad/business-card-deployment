@@ -78,4 +78,14 @@ resource "aws_elastic_beanstalk_environment" "default" {
     name      = "SSLCertificateArns"
     value     = data.aws_acm_certificate.default.arn
   }
+  setting {
+    namespace = "aws:elbv2:listener:80"
+    name      = "ListenerEnabled"
+    value     = false
+  }
+//  setting {
+//    namespace = "aws:elbv2:loadbalancer"
+//    name      = "SecurityGroups"
+//    value     = aws_security_group.lb_sg.arn
+//  }
 }
