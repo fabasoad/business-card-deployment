@@ -30,7 +30,7 @@ repos:
           - --args=--config-file=__GIT_WORKING_DIR__/.tfsec.json
       - id: terraform_validate
   - repo: https://github.com/bridgecrewio/checkov
-    rev: 2.0.551
+    rev: 2.0.554
     hooks:
       - id: checkov
         args: ["--quiet","--framework","terraform"]
