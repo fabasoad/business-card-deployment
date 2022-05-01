@@ -39,7 +39,7 @@ jobs:
           zip -r business-card-payload.zip public
           zip -j business-card-payload.zip server/{package.json,app.js}
       - name: Upload bundle
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: business-card-payload
           path: business-card-payload.zip
