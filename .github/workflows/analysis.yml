@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     name: checkov-action
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: bridgecrewio/checkov-action@master
         with:
           directory: ./terraform
