@@ -1,5 +1,5 @@
 ---
-name: Create release
+name: Release
 
 on:
   push:
@@ -8,10 +8,10 @@ on:
 
 jobs:
   create_release:
-    name: Release
+    name: Create release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Get latest release tag
