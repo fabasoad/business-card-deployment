@@ -1,9 +1,9 @@
 # Deployment for personal website
 
-<!-- markdownlint-disable-next-line MD013 -->
-![Analysis](https://github.com/fabasoad/business-card-deployment/workflows/Analysis/badge.svg)
-![Terraform Lint](https://github.com/fabasoad/business-card-deployment/workflows/Terraform%20Lint/badge.svg)
-![Terraform](https://github.com/fabasoad/business-card-deployment/workflows/Terraform/badge.svg)
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/fabasoad/business-card-deployment?include_prereleases)
+![terraform](https://github.com/fabasoad/business-card-deployment/actions/workflows/terraform.yml/badge.svg)
+![pre-commit](https://github.com/fabasoad/business-card-deployment/actions/workflows/pre-commit.yml/badge.svg)
 
 Deployment repo for <https://github.com/fabasoad/business-card/> project
 
