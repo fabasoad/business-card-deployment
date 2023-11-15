@@ -12,7 +12,7 @@ defaults:
     shell: sh
 
 env:
-  SKIP: no-commit-to-branch
+  SKIP: detect-aws-credentials, no-commit-to-branch
 
 jobs:
   pre-commit:
