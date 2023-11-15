@@ -13,13 +13,13 @@ repos:
     hooks:
       - id: gitleaks
   - repo: https://github.com/fabasoad/pre-commit-snyk
-    rev: v0.4.0
+    rev: v0.5.0
     hooks:
       - id: snyk-iac
         stages: ["push"]
   # Terraform
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.83.4
+    rev: v1.83.5
     hooks:
       - id: terraform_fmt
         stages: ["commit"]
@@ -35,7 +35,7 @@ repos:
       - id: terraform_validate
         stages: ["commit"]
   - repo: https://github.com/bridgecrewio/checkov
-    rev: 2.5.6
+    rev: 3.0.36
     hooks:
       - id: checkov
         args: ["--quiet","--framework","terraform"]
