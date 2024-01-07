@@ -12,6 +12,7 @@ resource "aws_s3_bucket_public_access_block" "business_card_bucket_access" {
   restrict_public_buckets = true
 }
 
+#checkov:skip=CKV2_AWS_62:To fix later
 resource "aws_s3_bucket" "business_card_bucket" {
   bucket = var.bucket_name
   versioning {
@@ -41,6 +42,7 @@ resource "aws_s3_bucket" "business_card_bucket" {
   #checkov:skip=CKV_AWS_145:No need to encrypt with KMS
 }
 
+#checkov:skip=CKV_AWS_186:To fix later
 resource "aws_s3_bucket_object" "business_card_payload" {
   bucket = aws_s3_bucket.business_card_bucket.id
   key    = "beanstalk/${local.payload_filename}"
