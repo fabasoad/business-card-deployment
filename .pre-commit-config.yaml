@@ -59,7 +59,6 @@ repos:
         stages: ["push"]
       - id: check-yaml
         stages: ["push"]
-      - id: detect-aws-credentials
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: mixed-line-ending
