@@ -1,4 +1,3 @@
-account             = 202440332649
 app_name            = "business-card"
 aws_region          = "ap-northeast-1"
 environment         = "prod"

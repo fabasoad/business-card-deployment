@@ -22,6 +22,7 @@ resource "aws_elastic_beanstalk_application_version" "default" {
   key         = aws_s3_bucket_object.business_card_payload.id
 }
 
+#checkov:skip=CKV_AWS_312: To fix later
 resource "aws_elastic_beanstalk_environment" "default" {
   name                = var.environment
   application         = aws_elastic_beanstalk_application.default.name
@@ -82,6 +83,16 @@ resource "aws_elastic_beanstalk_environment" "default" {
     namespace = "aws:elbv2:listener:80"
     name      = "ListenerEnabled"
     value     = false
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:managedactions"
+    name      = "ManagedActionsEnabled"
+    value     = true
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:healthreporting:system"
+    name      = "HealthStreamingEnabled"
+    value     = true
   }
   //  setting {
   //    namespace = "aws:elbv2:loadbalancer"

@@ -1,7 +1,3 @@
-variable "account" {
-  description = "Account ID"
-  type        = number
-}
 variable "app_name" {
   description = "Application name"
   type        = string
