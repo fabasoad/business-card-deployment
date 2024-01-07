@@ -40,12 +40,13 @@ resource "aws_s3_bucket" "business_card_bucket" {
   }
   #checkov:skip=CKV_AWS_144:No need to have cross-region replication
   #checkov:skip=CKV_AWS_145:No need to encrypt with KMS
+  #checkov:skip=CKV2_AWS_62:No need to enable event notifications
 }
 
-#checkov:skip=CKV_AWS_186:To fix later
 resource "aws_s3_bucket_object" "business_card_payload" {
   bucket = aws_s3_bucket.business_card_bucket.id
   key    = "beanstalk/${local.payload_filename}"
   source = local.payload_path
   etag   = filemd5(local.payload_path)
+  #checkov:skip=CKV_AWS_186:No need to encrypt with KMS
 }

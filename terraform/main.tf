@@ -89,6 +89,11 @@ resource "aws_elastic_beanstalk_environment" "default" {
     name      = "ManagedActionsEnabled"
     value     = true
   }
+  setting {
+    namespace = "aws:elasticbeanstalk:healthreporting:system"
+    name      = "HealthStreamingEnabled"
+    value     = true
+  }
   //  setting {
   //    namespace = "aws:elbv2:loadbalancer"
   //    name      = "SecurityGroups"
