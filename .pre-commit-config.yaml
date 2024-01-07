@@ -9,7 +9,7 @@ repos:
     hooks:
       - id: detect-secrets
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.18.0
+    rev: v8.18.1
     hooks:
       - id: gitleaks
   - repo: https://github.com/fabasoad/pre-commit-snyk
@@ -19,7 +19,7 @@ repos:
         stages: ["push"]
   # Terraform
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.83.5
+    rev: v1.86.0
     hooks:
       - id: terraform_fmt
         stages: ["commit"]
@@ -35,14 +35,14 @@ repos:
       - id: terraform_validate
         stages: ["commit"]
   - repo: https://github.com/bridgecrewio/checkov
-    rev: 3.0.36
+    rev: 3.1.54
     hooks:
       - id: checkov
         args: ["--quiet","--framework","terraform"]
         stages: ["push"]
   # Markdown
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.37.0
+    rev: v0.38.0
     hooks:
       - id: markdownlint-fix
         stages: ["commit"]
