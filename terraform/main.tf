@@ -22,7 +22,8 @@ resource "aws_elastic_beanstalk_application_version" "default" {
   key         = aws_s3_bucket_object.business_card_payload.id
 }
 
-#checkov:skip=CKV_AWS_312,CKV_AWS_340:To fix later
+#checkov:skip=CKV_AWS_312: To fix later
+#checkov:skip=CKV_AWS_340: To fix later
 resource "aws_elastic_beanstalk_environment" "default" {
   name                = var.environment
   application         = aws_elastic_beanstalk_application.default.name
