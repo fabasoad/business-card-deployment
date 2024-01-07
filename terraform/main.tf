@@ -23,7 +23,6 @@ resource "aws_elastic_beanstalk_application_version" "default" {
 }
 
 #checkov:skip=CKV_AWS_312: To fix later
-#checkov:skip=CKV_AWS_340: To fix later
 resource "aws_elastic_beanstalk_environment" "default" {
   name                = var.environment
   application         = aws_elastic_beanstalk_application.default.name
@@ -84,6 +83,11 @@ resource "aws_elastic_beanstalk_environment" "default" {
     namespace = "aws:elbv2:listener:80"
     name      = "ListenerEnabled"
     value     = false
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:managedactions"
+    name      = "ManagedActionsEnabled"
+    value     = true
   }
   //  setting {
   //    namespace = "aws:elbv2:loadbalancer"
