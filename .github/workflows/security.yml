@@ -49,3 +49,19 @@ jobs:
         with:
           category: "directory-scanning"
           sarif_file: "${{ steps.scan-directory.outputs.sarif }}"
+  iac-scanning:
+    name: IaC scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ${{ github.repository }}
+        uses: actions/checkout@v4
+      - name: Scan
+        uses: snyk/actions/iac@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Upload to GHAS
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          category: "iac-scanning"
+          sarif_file: "snyk.sarif"
