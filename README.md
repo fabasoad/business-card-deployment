@@ -3,7 +3,8 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/fabasoad/business-card-deployment?include_prereleases)
 ![terraform](https://github.com/fabasoad/business-card-deployment/actions/workflows/terraform.yml/badge.svg)
-![pre-commit](https://github.com/fabasoad/business-card-deployment/actions/workflows/pre-commit.yml/badge.svg)
+![security](https://github.com/fabasoad/business-card-deployment/actions/workflows/security.yml/badge.svg)
+![linting](https://github.com/fabasoad/business-card-deployment/actions/workflows/linting.yml/badge.svg)
 
 Deployment repo for <https://github.com/fabasoad/business-card/> project
 
