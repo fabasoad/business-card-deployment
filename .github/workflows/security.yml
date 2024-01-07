@@ -64,7 +64,10 @@ jobs:
         run: |
           file_name="$(date +%s).sarif"
           echo "sarif=${file_name}" >> "$GITHUB_OUTPUT"
-          snyk iac test ./terraform --sarif --sarif-file-output=${file_name}
+          snyk iac test ./terraform \
+            --sarif \
+            --sarif-file-output=${file_name} \
+            --policy-path=.snyk
       - name: Upload to GHAS
         if: always()
         uses: github/codeql-action/upload-sarif@v3
