@@ -49,8 +49,8 @@ jobs:
         with:
           category: "directory-scanning"
           sarif_file: "${{ steps.scan-directory.outputs.sarif }}"
-  iac-scanning-snyk:
-    name: IaC scanning with Snyk
+  iac-scanning:
+    name: IaC scanning
     runs-on: ubuntu-latest
     steps:
       - name: Checkout ${{ github.repository }}
@@ -72,26 +72,5 @@ jobs:
         if: always()
         uses: github/codeql-action/upload-sarif@v3
         with:
-          category: "iac-scanning-snyk"
+          category: "iac-scanning"
           sarif_file: "${{ steps.scan-iac.outputs.sarif }}"
-  iac-scanning-trivy:
-    name: IaC scanning with Trivy
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v4
-      - name: Scan IaC
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: "config"
-          scan-ref: "./terraform"
-          format: "sarif"
-          output: "trivy-results.sarif"
-          exit-code: "1"
-          tf-vars: "./terraform/vars.auto.tfvars"
-      - name: Upload to GHAS
-        if: always()
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          category: "iac-scanning-trivy"
-          sarif_file: "trivy-results.sarif"
