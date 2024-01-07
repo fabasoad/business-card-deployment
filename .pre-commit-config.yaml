@@ -27,10 +27,8 @@ repos:
         args:
           - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
         stages: ["commit"]
-      - id: terraform_tfsec
+      - id: terraform_trivy
         files: ^terraform/
-        args:
-          - --args=--config-file=__GIT_WORKING_DIR__/.tfsec.json
         stages: ["push"]
       - id: terraform_validate
         stages: ["commit"]
