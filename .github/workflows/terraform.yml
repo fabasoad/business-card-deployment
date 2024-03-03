@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0
       - name: Cache node_modules
         id: yarn-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}

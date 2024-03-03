@@ -12,4 +12,4 @@ jobs:
     name: Pre-commit
     uses: fabasoad/reusable-workflows/.github/workflows/wf-pre-commit.yml@main
     with:
-      skip-hooks: detect-aws-credentials, snyk-iac, terraform_trivy
+      skip-hooks: snyk-iac
