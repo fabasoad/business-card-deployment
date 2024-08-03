@@ -13,29 +13,31 @@ jobs:
     permissions:
       contents: read
       security-events: write
-    uses: fabasoad/reusable-workflows/.github/workflows/wf-security-sast.yml@main
-  iac-scanning:
-    name: IaC scanning
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v4
-      - name: Setup Snyk
-        uses: snyk/actions/setup@master
-      - name: Scan IaC
-        id: scan-iac
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: |
-          file_name="$(date +%s).sarif"
-          echo "sarif=${file_name}" >> "$GITHUB_OUTPUT"
-          snyk iac test ./terraform \
-            --sarif \
-            --sarif-file-output=${file_name} \
-            --policy-path=.snyk
-      - name: Upload to GHAS
-        if: always()
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          category: "iac-scanning"
-          sarif_file: "${{ steps.scan-iac.outputs.sarif }}"
+    uses: fabasoad/reusable-workflows/.github/workflows/wf-security-sast.yml@dependabot/github_actions/anchore/scan-action-4
+    with:
+      iac: true
+#  iac-scanning:
+#    name: IaC scanning
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout ${{ github.repository }}
+#        uses: actions/checkout@v4
+#      - name: Setup Snyk
+#        uses: snyk/actions/setup@master
+#      - name: Scan IaC
+#        id: scan-iac
+#        env:
+#          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#        run: |
+#          file_name="$(date +%s).sarif"
+#          echo "sarif=${file_name}" >> "$GITHUB_OUTPUT"
+#          snyk iac test ./terraform \
+#            --sarif \
+#            --sarif-file-output=${file_name} \
+#            --policy-path=.snyk
+#      - name: Upload to GHAS
+#        if: always()
+#        uses: github/codeql-action/upload-sarif@v3
+#        with:
+#          category: "iac-scanning"
+#          sarif_file: "${{ steps.scan-iac.outputs.sarif }}"
