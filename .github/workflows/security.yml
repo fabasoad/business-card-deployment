@@ -16,6 +16,7 @@ jobs:
     uses: fabasoad/reusable-workflows/.github/workflows/wf-security-sast.yml@dependabot/github_actions/anchore/scan-action-4
     with:
       iac: true
+      sca: false
 #  iac-scanning:
 #    name: IaC scanning
 #    runs-on: ubuntu-latest
