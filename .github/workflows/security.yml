@@ -16,4 +16,3 @@ jobs:
     uses: fabasoad/reusable-workflows/.github/workflows/wf-security-sast.yml@main
     with:
       iac: true
-      sca: false
