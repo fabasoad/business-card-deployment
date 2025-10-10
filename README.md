@@ -33,3 +33,7 @@ terraform init
 terraform plan
 terraform apply
 ```
+
+## Contributions
+
+![Alt](https://repobeats.axiom.co/api/embed/e86d3950a42e4b597a127fd5d47bf9297fdf28e8.svg "Repobeats analytics image")
