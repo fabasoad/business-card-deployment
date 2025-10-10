@@ -15,7 +15,7 @@ jobs:
           result=$(curl "https://api.github.com/repos/fabasoad/business-card/tags" | jq -r '.[0].name')
           echo "::set-output name=tag::${result}"
       - name: Checkout fabasoad/business-card
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: fabasoad/business-card
           ref: refs/tags/${{ steps.latest_tag.outputs.tag }}
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Download bundle
         uses: actions/download-artifact@v5
         with:
