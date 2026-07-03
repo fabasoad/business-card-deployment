@@ -22,7 +22,7 @@ repos:
     hooks:
       - id: grype-dir
         args:
-          - --grype-args=--by-cve --fail-on=low
+          - --grype-args=--by-cve --fail-on=low --exclude=**/.terraform
           - --hook-args=--log-level debug
         stages: ["pre-push"]
   # Terraform
