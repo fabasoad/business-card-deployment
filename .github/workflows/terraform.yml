@@ -2,12 +2,14 @@
 name: Terraform
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
   build_bundle:
     name: Build bundle
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Get latest release tag
         id: latest_tag
@@ -15,7 +17,7 @@ jobs:
           result=$(curl "https://api.github.com/repos/fabasoad/business-card/tags" | jq -r '.[0].name')
           echo "::set-output name=tag::${result}"
       - name: Checkout fabasoad/business-card
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           repository: fabasoad/business-card
           ref: refs/tags/${{ steps.latest_tag.outputs.tag }}
@@ -23,7 +25,7 @@ jobs:
           fetch-depth: 0
       - name: Cache node_modules
         id: yarn-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
@@ -39,7 +41,7 @@ jobs:
           zip -r business-card-payload.zip public
           zip -j business-card-payload.zip server/{package.json,app.js}
       - name: Upload bundle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: business-card-payload
           path: business-card-payload.zip
@@ -47,16 +49,18 @@ jobs:
     name: Terraform
     needs: build_bundle
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
       - name: Download bundle
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: business-card-payload
           path: ./terraform
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
         with:
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Terraform Init
