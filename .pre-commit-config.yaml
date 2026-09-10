@@ -27,7 +27,7 @@ repos:
         stages: ["pre-push"]
   # Terraform
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.109.0
+    rev: v1.109.1
     hooks:
       - id: terraform_fmt
         stages: ["pre-commit"]
@@ -38,7 +38,7 @@ repos:
       - id: terraform_validate
         stages: ["pre-commit"]
   - repo: https://github.com/bridgecrewio/checkov
-    rev: 3.3.16
+    rev: 3.3.17
     hooks:
       - id: checkov
         args: ["--quiet","--framework","terraform"]
